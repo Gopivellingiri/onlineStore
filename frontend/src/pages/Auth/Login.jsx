@@ -90,6 +90,11 @@ const Login = () => {
             </Link>
           </div>
         </div>
+        <img
+          src="https://images.pexels.com/photos/7195232/pexels-photo-7195232.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+          alt=""
+          className="h-[65rem] w-[59%] xl:block md:hidden sm:hidden rounded-lg object-cover"
+        />
       </section>
     </div>
   );
