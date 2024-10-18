@@ -38,7 +38,13 @@ const UserList = () => {
 
   const updateHandler = async (id) => {
     try {
-      await update;
+      await updateUser({
+        userId: id,
+        username: editableUserName,
+        email: editableUserEmail,
+      });
+      setEditableUserId(null);
+      refetch();
     } catch (error) {
       toast.error(error.data.message || error.error);
     }
@@ -78,7 +84,7 @@ const UserList = () => {
                           className="w-full p-2 border rounded-lg"
                         />
                         <button
-                          onClick={() => updatehandler(user._id)}
+                          onClick={() => updateHandler(user._id)}
                           className="ml-2 bg-blue-500 text-white py-2 px-4 rounded-lg"
                         >
                           <FaCheck />
@@ -107,7 +113,7 @@ const UserList = () => {
                           className="w-full p-2 border rounded-lg"
                         />
                         <button
-                          onChange={() => updateHandler(user._id)}
+                          onClick={() => updateHandler(user._id)}
                           className="ml-2 bg-blue-500 text-white py-2 px-4 rounded-lg"
                         >
                           <FaCheck />
