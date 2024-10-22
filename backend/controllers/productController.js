@@ -137,14 +137,36 @@ const addProductReview = asyncHandler(async (req, res) => {
         comment,
         user: req.user._id,
       };
-      product.review.push(review);
+      product.reviews.push(review);
       product.numReviews = product.reviews.length;
       product.rating =
-        product.review.reduce((acc, item) => item.rating + acc, 0) /
+        product.reviews.reduce((acc, item) => item.rating + acc, 0) /
         product.reviews.length;
       await product.save();
       res.status(201).json({ message: "Review added" });
+    } else {
+      res.status(404).json({ message: "Review added" });
     }
+  } catch (error) {
+    console.error(error);
+    res.status(400).json(error.message);
+  }
+});
+
+const fetchTopProducts = asyncHandler(async (req, res) => {
+  try {
+    const products = await Product.find({}).sort({ rating: -1 }).limit(4);
+    res.json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(400).json(error.message);
+  }
+});
+
+const fetchNewProducts = asyncHandler(async (req, res) => {
+  try {
+    const product = await Product.find().sort({ _id: -1 }).limit(5);
+    res.json(product);
   } catch (error) {
     console.error(error);
     res.status(400).json(error.message);
@@ -159,4 +181,6 @@ export {
   fetchProductById,
   fetchAllProduct,
   addProductReview,
+  fetchTopProducts,
+  fetchNewProducts,
 };
